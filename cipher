@@ -1,0 +1,39 @@
+def encrypt(plaintext, keyword):
+    encrypted_text = ""
+    keyword = keyword.upper()
+    keyword_length = len(keyword)
+    
+    for i in range(len(plaintext)):
+        if plaintext[i].isalpha():
+            plain_text = ord(keyword[i % keyword_length]) - ord('A')
+            encrypted_char = chr(((ord(plaintext[i]) - ord('A') + plain_text) % 26) + ord('A'))
+            encrypted_text += encrypted_char
+        else:
+            encrypted_text += plaintext[i]
+    
+    return encrypted_text
+
+def decrypt(ciphertext, keyword):
+    decrypted_text = ""
+    keyword = keyword.upper()
+    keyword_length = len(keyword)
+    
+    for i in range(len(ciphertext)):
+        if ciphertext[i].isalpha():
+            cipher_text = ord(keyword[i % keyword_length]) - ord('A')
+            decrypted_char = chr(((ord(ciphertext[i]) - ord('A') - cipher_text + 26) % 26) + ord('A'))
+            decrypted_text += decrypted_char
+        else:
+            decrypted_text += ciphertext[i]
+    
+    return decrypted_text
+
+def main():
+    plaintext = "HELLO"
+    keyword = "KEY"
+    encrypted_text = encrypt(plaintext, keyword)
+    decrypted_text = decrypt(encrypted_text, keyword)
+    print('plain text:', plaintext)
+    print('encrypted text:', encrypted_text)
+    print('decrypted text:', decrypted_text)
+main()
